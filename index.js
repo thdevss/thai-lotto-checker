@@ -1,14 +1,4 @@
-require('dotenv').config()
-
 const express = require('express')
-const axios = require('axios')
-
-if(process.env.REDIS_IP != '') {
-    const redis = require('redis')
-    const { promisify } = require('utils');
-    const client = redis.createClient();
-    const getAsync = promisify(client.get).bind(client);
-}
 
 
 const app = express();
