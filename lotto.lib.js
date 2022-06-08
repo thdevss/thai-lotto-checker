@@ -6,8 +6,10 @@ var client = createClient({
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT,
 });
-client.on('error', (err) => console.log('Redis Client Error', err));
-client.connect();
+if(process.env.REDIS_HOST != '') {
+    client.on('error', (err) => console.log('Redis Client Error', err));
+    client.connect();
+}
 
 const BASE_URL = `https://news.sanook.com/lotto`;
 
@@ -19,13 +21,13 @@ const getDataFromOrigin = async function(endpoint, cache_time = 3600) {
     if(process.env.REDIS_HOST != '') {
         const cached = await client.get(url);
         if (cached) {
-            console.log('using cache')
+            console.log('origin - using cache')
             return cached;
         }
     }
     
     const response = await axios.get(url);
-    console.log('using origin')
+    console.log('origin - using origin')
 
     if(process.env.REDIS_HOST != '') {
         await client.set(url, response.data, {
@@ -55,6 +57,11 @@ const getLottoResultPerDate = async function(lottoDate) {
 
     try {
         lottoResult = JSON.parse(response.split(`lottoResult = `)[1].split(`;`)[0])
+
+        lottoResult.info = {
+            key: lottoDate,
+            title: response.split(`<h2 class="content__title--sub">`)[1].split('</h2>')[0].trim()
+        };
 
         if(process.env.REDIS_HOST != '') {
             await client.set(cache_name, JSON.stringify(lottoResult), {
