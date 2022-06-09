@@ -42,6 +42,10 @@ const getDataFromOrigin = async function(endpoint, cache_time = 3600) {
 
 
 const getLottoResultPerDate = async function(lottoDate) {
+    if(lottoDate.length != 8 || (/^\d+$/.test(checklottoDate_number) != true) ) {
+        return {}
+    }
+
     const cache_name = `lotto-${lottoDate}`
 
     if(process.env.REDIS_HOST != '') {
@@ -122,7 +126,7 @@ const getLottoDateList = async function() {
 
 const checkNumberHasPrize = function(check_number, lottoResult) {
 
-    if(check_number.length != 6) {
+    if(check_number.length != 6 || (/^\d+$/.test(check_number) != true) ) {
         return {
             hasPrize: false,
             prizeStep: 0
