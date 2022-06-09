@@ -42,7 +42,7 @@ const getDataFromOrigin = async function(endpoint, cache_time = 3600) {
 
 
 const getLottoResultPerDate = async function(lottoDate) {
-    if(lottoDate.length != 8 || (/^\d+$/.test(checklottoDate_number) != true) ) {
+    if(lottoDate.length != 8 || (/^\d+$/.test(lottoDate) != true) ) {
         return {}
     }
 
