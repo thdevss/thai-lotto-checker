@@ -3,6 +3,11 @@ const lotto = require('./lotto.lib.js')
 
 const app = express();
 
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    next()
+})
+
 app.get('/', async(req, res) => {
     // get all lottoDate lists
 
