@@ -2,10 +2,10 @@ require('dotenv').config()
 const axios = require('axios')
 
 const { createClient } = require('redis');
+
 var client = createClient({
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-});
+    url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`
+})
 if(process.env.REDIS_HOST != '') {
     client.on('error', (err) => console.log('Redis Client Error', err));
     client.connect();
