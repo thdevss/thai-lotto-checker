@@ -131,12 +131,17 @@ const checkNumberHasPrize = function(check_number, lottoResult) {
     
     var hasPrize = false;
     var prizeStep = 0;
+    var resultTxt = {
+        message: 'คุณไม่ถูกรางวัล',
+        prize: 0
+    };
 
     if(lottoResult.prize.prize_5.filter(function(item) {
         return item == check_number;
     }).length == 1) {
         prizeStep = "5"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize_5;
     }
 
     if(lottoResult.prize.prize_4.filter(function(item) {
@@ -144,6 +149,7 @@ const checkNumberHasPrize = function(check_number, lottoResult) {
     }).length == 1) {
         prizeStep = "4"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize_4;
     }
 
     if(lottoResult.prize.prize_3.filter(function(item) {
@@ -151,6 +157,7 @@ const checkNumberHasPrize = function(check_number, lottoResult) {
     }).length == 1) {
         prizeStep = "3"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize_3;
     }
 
     if(lottoResult.prize.prize_2.filter(function(item) {
@@ -158,6 +165,7 @@ const checkNumberHasPrize = function(check_number, lottoResult) {
     }).length == 1) {
         prizeStep = "2"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize_2;
     }
 
     if(lottoResult.prize.prize1_close.filter(function(item) {
@@ -165,11 +173,13 @@ const checkNumberHasPrize = function(check_number, lottoResult) {
     }).length == 1) {
         prizeStep = "1_close"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize1_close;
     }
 
     if(lottoResult.prize.prize_1 == check_number) {
         prizeStep = "1"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize_1;
     }
 
     if(lottoResult.prize.prize_last3.filter(function(item) {
@@ -177,6 +187,7 @@ const checkNumberHasPrize = function(check_number, lottoResult) {
     }).length == 1 && !hasPrize) {
         prizeStep = "_last3"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize_last3;
     }
 
     if(lottoResult.prize.prize_first3.filter(function(item) {
@@ -184,19 +195,21 @@ const checkNumberHasPrize = function(check_number, lottoResult) {
     }).length == 1 && !hasPrize) {
         prizeStep = "_first3"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize_first3;
     }
 
 
     if(lottoResult.prize.prize_last2 == check_number.substring(4) && !hasPrize) {
         prizeStep = "_last2"
         hasPrize = true;
+        resultTxt = lottoResult.wording.prize_last2;
     }
-
 
 
     return {
         hasPrize: hasPrize,
-        prizeStep: prizeStep
+        prizeStep: prizeStep,
+        resultTxt: resultTxt
     }
 }
 
